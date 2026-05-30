@@ -36,6 +36,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local app data
+/data
+/storage
+
+# Claude Code local settings (machine-specific; may contain dev-time secrets in
+# permission allowlists)
+/.claude
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

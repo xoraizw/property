@@ -1,0 +1,31 @@
+# Render Blueprint — one-click deploy.
+# Render.com → New → Blueprint → connect this repo. Render reads this file and
+# provisions the web service. You'll be prompted for the secret env vars on
+# first deploy (they're marked sync:false so they aren't stored in git).
+services:
+  - type: web
+    name: pic-to-video
+    runtime: node
+    plan: standard            # 2 GB RAM — Starter (512 MB) sometimes OOMs the Next build
+    region: oregon            # pick whichever is closest to your testers
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npx next start -p $PORT
+    healthCheckPath: /login   # /login is the only page that doesn't require auth
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: SUPABASE_BUCKET
+        value: media
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FAL_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
